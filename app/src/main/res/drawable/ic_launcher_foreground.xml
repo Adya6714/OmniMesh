@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Tall diamond — Google blue. The OmniMesh "M" mark is two
+         overlapping diamond shapes; this is the vertical one. -->
+    <path
+        android:fillColor="#4285F4"
+        android:pathData="M54,30 L78,54 L54,78 L30,54 Z" />
+
+    <!-- Wide diamond — Google green. Crosses the tall diamond
+         horizontally to suggest mesh / network nodes. -->
+    <path
+        android:fillColor="#34A853"
+        android:fillAlpha="0.85"
+        android:pathData="M27,54 L54,42 L81,54 L54,66 Z" />
+</vector>

@@ -1,0 +1,13 @@
+{
+  "name": "omnimesh",
+  "private": true,
+  "description": "Root scripts delegate to web/ and functions/ (no dependencies here)",
+  "scripts": {
+    "setup": "npm run install:web && npm run install:functions",
+    "start": "npm start --prefix web",
+    "build": "npm run build --prefix web",
+    "deploy:hosting": "npm run build --prefix web && npx --yes firebase-tools@latest deploy --only hosting --project omnimesh-command",
+    "install:web": "npm install --prefix web",
+    "install:functions": "npm install --prefix functions"
+  }
+}

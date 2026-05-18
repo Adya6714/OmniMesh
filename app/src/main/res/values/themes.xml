@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.OmniMesh" parent="android:Theme.Material.Light.NoActionBar">
+        <!-- Minimal theme for Compose app -->
+        <item name="android:statusBarColor">#FF2196F3</item>
+    </style>
+</resources>

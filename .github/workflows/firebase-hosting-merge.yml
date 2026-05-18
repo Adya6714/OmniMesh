@@ -1,0 +1,106 @@
+# Deploy Hosting from web/build — same artifact as local `npm run build --prefix web`.
+#
+# If this job fails with only "exit code 1": GitHub → Actions → open the run →
+# expand EACH step; the first step with a red X contains the real error (usually 403 / npm / JSON).
+name: Deploy to Firebase Hosting on merge
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: firebase-hosting-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy_hosting:
+    runs-on: ubuntu-latest
+    env:
+      FIREBASE_PROJECT_ID: omnimesh-command
+      # `runner` context is NOT allowed in job-level `env` (workflow validation error).
+      GOOGLE_APPLICATION_CREDENTIALS: /tmp/omnimesh-firebase-sa.json
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: ".nvmrc"
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+
+      # Avoid shell `echo` mangling JSON; validate + write in one place.
+      - name: Validate Firebase service account secret & write credentials file
+        env:
+          SA_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_OMNIMESH_COMMAND }}
+        run: |
+          set -euo pipefail
+          python3 << 'PY'
+          import json, os, pathlib, sys
+
+          raw = os.environ.get("SA_JSON", "").strip()
+          if not raw:
+              print("::error::Missing GitHub secret FIREBASE_SERVICE_ACCOUNT_OMNIMESH_COMMAND.")
+              print("Add it under Repo Settings → Secrets and variables → Actions.")
+              sys.exit(1)
+
+          try:
+              data = json.loads(raw)
+          except json.JSONDecodeError as e:
+              print(f"::error::Secret must be the raw JSON service-account key (Firebase Console → Project settings → Service accounts): {e}")
+              sys.exit(1)
+
+          path = os.environ["GOOGLE_APPLICATION_CREDENTIALS"]
+          pathlib.Path(path).write_text(raw)
+
+          email = data.get("client_email", "unknown")
+          gcp = data.get("project_id", "unknown")
+          want = os.environ.get("FIREBASE_PROJECT_ID", "")
+          print(f"Using service account: {email}")
+          print(f"JSON project_id field: {gcp} (Firebase CLI project: {want})")
+          if gcp != want:
+              print(f"::warning::GCP project_id in key ({gcp}) ≠ FIREBASE_PROJECT_ID ({want}). Fix key or project id — deploy often fails with 403.")
+          PY
+          test -s "${GOOGLE_APPLICATION_CREDENTIALS}"
+
+      - name: Install & build web (CRA production bundle)
+        working-directory: web
+        env:
+          REACT_APP_FIREBASE_API_KEY: ${{ secrets.REACT_APP_FIREBASE_API_KEY }}
+          REACT_APP_FIREBASE_AUTH_DOMAIN: ${{ secrets.REACT_APP_FIREBASE_AUTH_DOMAIN }}
+          REACT_APP_FIREBASE_PROJECT_ID: ${{ secrets.REACT_APP_FIREBASE_PROJECT_ID }}
+          REACT_APP_FIREBASE_STORAGE_BUCKET: ${{ secrets.REACT_APP_FIREBASE_STORAGE_BUCKET }}
+          REACT_APP_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.REACT_APP_FIREBASE_MESSAGING_SENDER_ID }}
+          REACT_APP_FIREBASE_APP_ID: ${{ secrets.REACT_APP_FIREBASE_APP_ID }}
+          REACT_APP_GEMINI_API_KEY: ${{ secrets.REACT_APP_GEMINI_API_KEY }}
+          REACT_APP_GEMINI_MODEL: ${{ secrets.REACT_APP_GEMINI_MODEL }}
+          REACT_APP_GOOGLE_MAPS_API_KEY: ${{ secrets.REACT_APP_GOOGLE_MAPS_API_KEY }}
+          REACT_APP_MAPS_API_KEY: ${{ secrets.REACT_APP_MAPS_API_KEY }}
+          CI: "true"
+        run: |
+          set -euo pipefail
+          npm ci
+          npm run build
+          test -f build/index.html
+
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools@14
+
+      - name: Firebase CLI version
+        run: firebase --version
+
+      - name: Verify Hosting API access (diagnostic)
+        run: |
+          set -euo pipefail
+          firebase hosting:sites:list --project "${FIREBASE_PROJECT_ID}" --non-interactive
+
+      - name: Deploy Hosting (firebase.json → public web/build)
+        run: |
+          set -euo pipefail
+          firebase deploy --only hosting --project "${FIREBASE_PROJECT_ID}" --non-interactive

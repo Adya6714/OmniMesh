@@ -1,0 +1,92 @@
+# gradle/libs.versions.toml
+[versions]
+agp = "8.4.0"
+kotlin = "2.1.10"
+coreKtx = "1.13.1"
+lifecycleRuntime = "2.8.2"
+activityCompose = "1.9.0"
+composeBom = "2024.06.00"
+room = "2.7.2"
+workManager = "2.9.0"
+cameraX = "1.3.4"
+mlkitGenai = "1.0.0-beta1"
+mediapipe = "0.10.14"
+nearby = "19.1.0"
+location = "21.2.0"
+firebaseBom = "33.1.0"
+coroutines = "1.8.1"
+tensorflowLite = "2.17.0"
+googleServices = "4.4.2"
+googleMaps = "19.0.0"
+mapsCompose = "4.4.1"
+googleCloud = "2.4.0"
+
+[libraries]
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntime" }
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
+androidx-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-compose-ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts" }
+androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+compose-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version = "1.6.8" }
+maps-android = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "googleMaps" }
+maps-compose = { module = "com.google.maps.android:maps-compose", version = "4.3.3" }
+cloud-speech = { group = "com.google.cloud", name = "google-cloud-speech", version = "4.29.0" }
+cloud-tts = { group = "com.google.cloud", name = "google-cloud-texttospeech", version = "2.54.0" }
+places = { group = "com.google.android.libraries.places", name = "places", version = "3.5.0" }
+translate = { group = "com.google.mlkit", name = "translate", version = "17.0.3" }
+firebase-mlmodel = { group = "com.google.firebase", name = "firebase-ml-modeldownloader-ktx" }
+
+# Room DB — local priority packet queue
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+
+# WorkManager — keeps background services alive
+work-runtime-ktx = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "workManager" }
+
+# CameraX — injury photo capture
+camera-camera2 = { group = "androidx.camera", name = "camera-camera2", version.ref = "cameraX" }
+camera-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "cameraX" }
+camera-view = { group = "androidx.camera", name = "camera-view", version.ref = "cameraX" }
+
+# ML Kit Gemini Nano — Signal 4 on-device LLM
+mlkit-genai = { group = "com.google.mlkit", name = "genai-prompt", version.ref = "mlkitGenai" }
+
+# MediaPipe — Signal 1 (vision) + Signal 2 (audio)
+mediapipe-vision = { group = "com.google.mediapipe", name = "tasks-vision", version.ref = "mediapipe" }
+mediapipe-audio = { group = "com.google.mediapipe", name = "tasks-audio", version.ref = "mediapipe" }
+
+# Nearby Connections — mesh layer
+nearby = { group = "com.google.android.gms", name = "play-services-nearby", version.ref = "nearby" }
+
+# Location — GPS coordinates in triage packets
+location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "location" }
+
+# Firebase
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore-ktx" }
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth-ktx" }
+firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
+firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging-ktx" }
+
+# Coroutines — parallel model execution
+coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
+coroutines-play-services = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-play-services", version.ref = "coroutines" }
+tensorflow-lite = { group = "org.tensorflow", name = "tensorflow-lite", version.ref = "tensorflowLite" }
+generativeai = { group = "com.google.ai.client.generativeai", name = "generativeai", version = "0.9.0" }
+
+# Testing
+junit = { group = "junit", name = "junit", version = "4.13.2" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version = "1.1.5" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version = "3.5.1" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

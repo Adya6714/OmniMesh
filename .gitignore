@@ -1,0 +1,59 @@
+# Android build outputs
+*.iml
+.gradle/
+local.properties
+.idea/
+.DS_Store
+build/
+captures/
+*.apk
+*.aab
+*.ap_
+*.hprof
+.kotlin/
+
+# API keys — NEVER commit these
+google-services.json
+*.keystore
+secrets.properties
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Python training environments
+training/__pycache__/
+training/*.egg-info/
+training/venv/
+training/.env
+.venv/
+.venv-validate/
+# TFLite: bundle APK models in-repo; ignore stray exports elsewhere
+*.tflite
+!app/src/main/assets/**/*.tflite
+# Large optional training media (keep scripts; ignore blobs if present)
+training/audio_data/
+
+# Duplicate diagram raster — canonical file is docs/screenshots/architecture-render.png
+Edge Device Packet Dispatch May 10 2026.png
+
+# Editors / local tooling
+
+# OS junk
+Thumbs.db
+web/.env
+functions/.env
+
+# Agent / IDE noise (not needed to build the product)
+.agents/
+.claude/
+.firebase/
+skills-lock.json
+
+# Node
+web/node_modules/
+web/build/
+functions/node_modules/
+firebase-debug.log
+firebase-debug.*.log

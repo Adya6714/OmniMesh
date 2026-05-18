@@ -1,0 +1,5 @@
+# Minimal deps for validate_all_models.py
+# TF 2.16's TFLite runtime is too old for models that use FULLY_CONNECTED v12+.
+# Use: python -m venv .venv-validate && source .venv-validate/bin/activate && pip install -r requirements-validate.txt
+tensorflow>=2.17.0
+numpy>=1.26.0
