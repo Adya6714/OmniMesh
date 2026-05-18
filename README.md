@@ -62,7 +62,7 @@ _Additional filenames are documented in [`docs/screenshots/README.md`](docs/scre
 <td align="center" colspan="2">
 <b>Fig. 1 · Three-layer system architecture</b><br/>
 <sub>Exported raster matching the <a href="docs/architecture.md">Mermaid source</a> in <code>docs/architecture.md</code> · Edge → Mesh → Command data flows</sub><br/><br/>
-<img src="docs/screenshots/architecture-render.png" alt="OmniMesh architecture diagram PNG export" width="96%" />
+<img src="docs/architecture-render.png" alt="OmniMesh architecture diagram PNG export" width="96%" />
 </td>
 </tr>
 <tr>
@@ -86,7 +86,7 @@ _Additional filenames are documented in [`docs/screenshots/README.md`](docs/scre
 </tr>
 </table>
 
-_Source raster file in repo root:_ **`Edge Device Packet Dispatch May 10 2026.png`** _(same graphic as_ `docs/screenshots/architecture-render.png`_)._ Update either copy when you re‑export from Mermaid.\_
+_Source raster:_ [`docs/architecture-render.png`](docs/architecture-render.png) _(duplicate in repo root as_ `Edge Device Packet Dispatch May 10 2026.png`_)._ Update when you re‑export from Mermaid.\_
 
 ---
 
@@ -100,8 +100,12 @@ cp secrets.properties.example secrets.properties   # GEMINI_API_KEY (Android Vis
 make dev-web    # → http://localhost:3000
 ```
 
-Full operational procedures — mesh hardware pairing, Firestore rules, Functions emulator: **[`docs/HACKATHON_SETUP.md`](docs/HACKATHON_SETUP.md)**
-**4-minute judging demo (verbatim script + choreography): [`docs/DEMO_SCRIPT.md`](docs/DEMO_SCRIPT.md)**
+| Doc | Purpose |
+| --- | --- |
+| [`docs/HACKATHON_SETUP.md`](docs/HACKATHON_SETUP.md) | Local setup, Firebase, Android, mesh testing, GitHub deploy secrets |
+| [`docs/documentation.md`](docs/documentation.md) | Full problem statement, layer-by-layer technical design, demo narrative |
+| [`docs/architecture.md`](docs/architecture.md) | Mermaid source for the Edge → Mesh → Command diagram |
+| [`docs/screenshots/README.md`](docs/screenshots/README.md) | Screenshot filenames for README figures |
 
 > **Security.** Never commit `web/.env`, `secrets.properties`, `google-services.json`, or API keys in `firebase.json`. Rotate any credential previously exposed in source history.
 
@@ -125,9 +129,10 @@ Full operational procedures — mesh hardware pairing, Firestore rules, Function
 13. [UN SDG alignment](#un-sdg-alignment)
 14. [Demo narrative](#the-demo-moment)
 15. [Repository layout & setup](#repository-layout--setup)
-16. [Hackathon replication guide](docs/HACKATHON_SETUP.md)
-17. [4‑minute demo script](docs/DEMO_SCRIPT.md)
-18. [Documentation vs. this repository](#documentation-vs-this-repository)
+16. [Setup guide](docs/HACKATHON_SETUP.md)  
+17. [Full technical documentation](docs/documentation.md)  
+18. [Architecture diagram source](docs/architecture.md)  
+19. [Documentation vs. this repository](#documentation-vs-this-repository)
 
 </details>
 
@@ -191,7 +196,7 @@ See [Theory documentation](#theory-documentation) for the full narrative (signal
 
 ## Feature inventory
 
-_Complete product surface — suitable for resumes, Devpost, pitch decks, and hackathon submissions. See [`docs/DEMO_SCRIPT.md`](docs/DEMO_SCRIPT.md) for a 4‑minute walkthrough._
+_Complete product surface — suitable for resumes, Devpost, pitch decks, and hackathon submissions. See [`docs/documentation.md`](docs/documentation.md) for the full technical write-up and demo narrative._
 
 ### Core system
 
@@ -624,8 +629,11 @@ OmniMesh/
 ├── web/                 # React operator/victim dashboard (.env from .env.example)
 ├── functions/           # Firebase Cloud Functions (Gemini dispatch)
 ├── docs/
-│   ├── architecture.md      # layered architecture Mermaid source
-│   └── HACKATHON_SETUP.md   # step-by-step for judges & contributors
+│   ├── documentation.md     # problem statement + full technical design
+│   ├── HACKATHON_SETUP.md   # setup, deploy, judges checklist
+│   ├── architecture.md      # Mermaid diagram source
+│   ├── architecture-render.png
+│   └── screenshots/         # README figure placeholders
 ├── secrets.properties.example
 ├── firestore.rules.example
 └── README.md            # this document
