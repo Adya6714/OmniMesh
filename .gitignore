@@ -39,6 +39,7 @@ training/audio_data/
 Edge Device Packet Dispatch May 10 2026.png
 
 # Editors / local tooling
+.githooks/
 
 # OS junk
 Thumbs.db
