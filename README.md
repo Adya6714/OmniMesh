@@ -53,40 +53,38 @@
 
 <br/>
 
-### Annex A — Interface catalogue _(figures · placeholders)_
+### Annex A — Android app screenshots
 
-_Additional filenames are documented in [`docs/screenshots/README.md`](docs/screenshots/README.md). Replace dashed placeholders by exporting PNG/WebP to matching paths._
+_Architecture diagram: see [System architecture diagram](#system-architecture-diagram) (Fig. 5) and [`docs/architecture.md`](docs/architecture.md)._
 
 <table>
 <tr>
 <td align="center" colspan="2">
-<b>Fig. 1 · Three-layer system architecture</b><br/>
-<sub>Exported raster matching the <a href="docs/architecture.md">Mermaid source</a> in <code>docs/architecture.md</code> · Edge → Mesh → Command data flows</sub><br/><br/>
-<img src="docs/architecture-render.png" alt="OmniMesh architecture diagram PNG export" width="96%" />
+<b>Fig. 1 · Product overview</b><br/>
+<sub>Victim · Responder · Command surfaces · mesh + AI stack</sub><br/><br/>
+<img src="docs/sc/1.png" alt="OmniMesh product overview" width="96%" />
 </td>
 </tr>
 <tr>
 <td align="center" width="50%"><br/>
-<b>Fig. 2 · Web command & responder dashboard</b><br/>
-<sub>Heat-layer map · triage queue · simulation controls (demo)</sub><br/><br/>
-<img src="docs/screenshots/web-command-dashboard.png" alt="Add docs/screenshots/web-command-dashboard.png" width="92%" />
+<b>Fig. 2 · Victim mode</b><br/>
+<sub>Passive distress detection · REPORT EMERGENCY · voice / capture / companion</sub><br/><br/>
+<img src="docs/sc/2.png" alt="OmniMesh Victim screen" width="92%" />
 </td>
 <td align="center" width="50%"><br/>
-<b>Fig. 3 · Android handset · passive SOS / edge UX</b><br/>
-<sub>Add your device screenshot as <code>docs/screenshots/android-handset-ui.png</code></sub><br/><br/>
-<img src="docs/screenshots/android-handset-ui.png" alt="Add docs/screenshots/android-handset-ui.png" width="48%" />
+<b>Fig. 3 · Responder mode</b><br/>
+<sub>RED-first triage queue · mesh map · packet detail · triage QR</sub><br/><br/>
+<img src="docs/sc/3.png" alt="OmniMesh Responder screen" width="92%" />
 </td>
 </tr>
 <tr>
 <td align="center" colspan="2"><br/>
-<b>Fig. 4 · Victim / SOS shell (web)</b><br/>
-<sub>SOS hub · manual triage · demo toggle</sub><br/><br/>
-<img src="docs/screenshots/web-victim-mode.png" alt="Add docs/screenshots/web-victim-mode.png" width="56%" />
+<b>Fig. 4 · Command mode</b><br/>
+<sub>Live stats · mesh overview · Gemini dispatch · incident timeline</sub><br/><br/>
+<img src="docs/sc/4.png" alt="OmniMesh Command screen" width="56%" />
 </td>
 </tr>
 </table>
-
-_Source raster:_ [`docs/architecture-render.png`](docs/architecture-render.png) _(duplicate in repo root as_ `Edge Device Packet Dispatch May 10 2026.png`_)._ Update when you re‑export from Mermaid.\_
 
 ---
 
@@ -105,7 +103,7 @@ make dev-web    # → http://localhost:3000
 | [`docs/HACKATHON_SETUP.md`](docs/HACKATHON_SETUP.md) | Local setup, Firebase, Android, mesh testing, GitHub deploy secrets |
 | [`docs/documentation.md`](docs/documentation.md) | Full problem statement, layer-by-layer technical design, demo narrative |
 | [`docs/architecture.md`](docs/architecture.md) | Mermaid source for the Edge → Mesh → Command diagram |
-| [`docs/screenshots/README.md`](docs/screenshots/README.md) | Screenshot filenames for README figures |
+| [`docs/sc/`](docs/sc/) | Android app screenshots used in Annex A |
 
 > **Security.** Never commit `web/.env`, `secrets.properties`, `google-services.json`, or API keys in `firebase.json`. Rotate any credential previously exposed in source history.
 
@@ -633,7 +631,7 @@ OmniMesh/
 │   ├── HACKATHON_SETUP.md   # setup, deploy, judges checklist
 │   ├── architecture.md      # Mermaid diagram source
 │   ├── architecture-render.png
-│   └── screenshots/         # README figure placeholders
+│   └── sc/                  # Android screenshots (README Annex A)
 ├── secrets.properties.example
 ├── firestore.rules.example
 └── README.md            # this document
