@@ -73,6 +73,31 @@ npm install --prefix functions
 
 Local `web/.env` uses the same `REACT_APP_*` names. **Never commit** `.env` or paste keys into the repo.
 
+### After re-cloning (new laptop / deleted folder)
+
+GitHub Actions secrets stay on **GitHub** — they are **not** in the git clone. Your local keys live in **`secrets.properties`** (gitignored), which you must restore yourself.
+
+1. **Clone the canonical repo** (always this URL — do not create a second repo):
+   ```bash
+   git clone git@github.com:Adya6714/OmniMesh.git
+   cd OmniMesh
+   ```
+2. **Restore secrets locally** — copy your backed-up `secrets.properties` to the repo root, or:
+   ```bash
+   cp secrets.properties.example secrets.properties
+   # fill in Firebase service-account JSON + firebaseConfig + GEMINI_API_KEY
+   ```
+3. **Sync to GitHub** (only needed once per machine, or if you created a new empty repo):
+   ```bash
+   gh auth login
+   ./scripts/sync-github-actions-secrets.sh
+   ```
+   Verifies with `gh secret list -R Adya6714/OmniMesh` (expect 8 secrets).
+4. **Local web dev** — optional `web/.env` with the same `REACT_APP_*` values (see `secrets.properties` firebase block).
+5. **Deploy** — push to `main`, or **Actions → Deploy to Firebase Hosting on merge → Run workflow**.
+
+**Do not** create a second GitHub repo when re-cloning; secrets are per-repo and will not copy over.
+
 ### Hosting parity (`localhost` vs `omnimesh-command.web.app`)
 
 - **Same UI code:** Production hosting is exactly **`npm run build --prefix web`** output (`firebase.json` → `"public": "web/build"`). There is no separate “hosted” branch of React — only whatever was **last deployed**.
