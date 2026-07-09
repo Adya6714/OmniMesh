@@ -6,12 +6,18 @@ import DeploymentDashboard from "./DeploymentDashboard";
 import { DEMO_ANALYSIS, DEMO_PACKETS_WITH_DEMO, DEMO_PEER_COUNT } from "./demoData";
 import { db, isFirebaseConfigured, authReady } from "./firebase";
 import { runDispatchAgent } from "./gemini";
+import {
+  fetchBackendHealth,
+  runBackendDispatch,
+  setBackendConnectivity,
+} from "./omnimeshBackend";
 import ResponderPanel from "./ResponderPanel";
 import VictimPanel from "./VictimPanel";
 import MeshBackground from "./MeshBackground";
 import OmniMeshSeedDevPanel from "./OmniMeshSeedDevPanel";
 
 const DEMO_MODE_KEY = "omnimesh_web_demo_mode";
+const DISPATCH_ENGINE_KEY = "omnimesh_dispatch_engine";
 
 const packetTimestamp = (p) => Number(p?.createdAt ?? p?.ts ?? 0);
 
@@ -104,6 +110,16 @@ function OmniMeshAppContent() {
   const [realPackets, setRealPackets] = useState([]);
   const [analysis, setAnalysis] = useState(null);
   const [analyzing, setAnalyzing] = useState(false);
+  const [dispatchEngine, setDispatchEngine] = useState(() => {
+    try {
+      const stored = localStorage.getItem(DISPATCH_ENGINE_KEY);
+      return stored === "backend" ? "backend" : "gemini";
+    } catch {
+      return "gemini";
+    }
+  });
+  const [backendOnline, setBackendOnline] = useState(true);
+  const [connectivityBusy, setConnectivityBusy] = useState(false);
   const [showSplash, setShowSplash] = useState(true);
   const [alertPacket, setAlertPacket] = useState(null);
   const previousRedCount = useRef(0);
@@ -122,9 +138,47 @@ function OmniMeshAppContent() {
   }, [demoMode]);
 
   useEffect(() => {
+    try {
+      localStorage.setItem(DISPATCH_ENGINE_KEY, dispatchEngine);
+    } catch {
+      /* ignore */
+    }
+  }, [dispatchEngine]);
+
+  useEffect(() => {
     const t = setTimeout(() => setShowSplash(false), 2000);
     return () => clearTimeout(t);
   }, []);
+
+  useEffect(() => {
+    if (activeNavId !== "command" || dispatchEngine !== "backend") return undefined;
+    let cancelled = false;
+    fetchBackendHealth()
+      .then((health) => {
+        if (!cancelled) setBackendOnline(Boolean(health?.connectivity));
+      })
+      .catch((err) => {
+        console.warn("[OmniMesh backend] health poll failed:", err?.message);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [activeNavId, dispatchEngine]);
+
+  const toggleBackendConnectivity = async () => {
+    if (connectivityBusy) return;
+    setConnectivityBusy(true);
+    try {
+      const next = !backendOnline;
+      const result = await setBackendConnectivity(next);
+      setBackendOnline(Boolean(result?.connectivity));
+    } catch (error) {
+      console.error("[OmniMesh backend] connectivity toggle failed:", error);
+    } finally {
+      setConnectivityBusy(false);
+    }
+  };
+
 
   /**
    * Single feed for UI: Firestore rows + optional demo rows (deduped by id, real wins).
@@ -181,11 +235,16 @@ function OmniMeshAppContent() {
       return;
     }
     try {
-      const result = await runDispatchAgent(packetList);
+      const result =
+        dispatchEngine === "backend"
+          ? await runBackendDispatch(packetList)
+          : await runDispatchAgent(packetList);
       setAnalysis(result);
     } catch (error) {
-      console.error("Gemini dispatch error:", error);
-      console.error("Gemini response:", error?.response?.data);
+      console.error(
+        dispatchEngine === "backend" ? "Backend dispatch error:" : "Gemini dispatch error:",
+        error,
+      );
       setAnalysis({
         critical_alert: "Dispatch analysis unavailable",
         analysis:
@@ -194,6 +253,7 @@ function OmniMeshAppContent() {
         zone_assignments: [],
         estimated_casualties: "Unknown",
         priority_order: [],
+        mode_used: dispatchEngine === "backend" ? "local" : undefined,
       });
     } finally {
       setAnalyzing(false);
@@ -333,6 +393,19 @@ function OmniMeshAppContent() {
               </div>
               <span className="om-clock">{timeText}</span>
               {mode === "Command" ? <span className="om-timezone">{timezoneText}</span> : null}
+              {mode === "Command" && dispatchEngine === "backend" ? (
+                <button
+                  type="button"
+                  className={`om-connectivity-toggle ${backendOnline ? "om-connectivity-toggle--on" : "om-connectivity-toggle--off"}`}
+                  onClick={toggleBackendConnectivity}
+                  disabled={connectivityBusy}
+                  aria-pressed={backendOnline}
+                  title="Toggle OmniMesh AI backend uplink (demo hybrid routing)"
+                >
+                  <span className="om-connectivity-toggle__label">Connectivity</span>
+                  <span className="om-connectivity-toggle__state">{backendOnline ? "ONLINE" : "OFFLINE"}</span>
+                </button>
+              ) : null}
             </>
           )}
         </div>
@@ -354,6 +427,7 @@ function OmniMeshAppContent() {
             demoMode={demoMode}
             analysis={analysis}
             analyzing={analyzing}
+            dispatchEngine={dispatchEngine}
             onAnalyze={() => analyzePackets(displayPackets)}
           />
         )}
@@ -364,6 +438,8 @@ function OmniMeshAppContent() {
             demoMode={demoMode}
             analysis={analysis}
             analyzing={analyzing}
+            dispatchEngine={dispatchEngine}
+            onDispatchEngineChange={setDispatchEngine}
             onAnalyze={() => analyzePackets(displayPackets)}
           />
         )}

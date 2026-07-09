@@ -449,6 +449,8 @@ export default function CommandPanel({
   demoMode = true,
   analysis,
   analyzing,
+  dispatchEngine = "gemini",
+  onDispatchEngineChange,
   onAnalyze,
 }) {
   const now = new Date();
@@ -526,6 +528,10 @@ export default function CommandPanel({
     });
   }, [packets]);
 
+  const isBackendEngine = dispatchEngine === "backend";
+  const engineLabel = isBackendEngine ? "OMNIMESH AI BACKEND" : "GEMINI DISPATCH AGENT";
+  const modeUsed = analysis?.mode_used;
+
   useEffect(() => {
     if (!analysis) {
       analysisTimelineSigRef.current = null;
@@ -539,15 +545,17 @@ export default function CommandPanel({
     setTimelineEvents((prev) =>
       [
         {
-          id: `tl-gemini-${Date.now()}`,
+          id: `tl-dispatch-${Date.now()}`,
           time: hhmm(),
           severity: "blue",
-          text: "Gemini dispatch analysis updated",
+          text: isBackendEngine
+            ? `OmniMesh AI backend analysis updated (${modeUsed || "routing pending"})`
+            : "Gemini dispatch analysis updated",
         },
         ...prev,
       ].slice(0, 20),
     );
-  }, [analysis]);
+  }, [analysis, isBackendEngine, modeUsed]);
 
   const sessionStartRef = useRef(Date.now());
   const [sessionTime, setSessionTime] = useState(() => formatSessionClock(0));
@@ -593,8 +601,12 @@ export default function CommandPanel({
 
   useLayoutEffect(() => {
     if (!analyzing) return;
-    setBootLines(["> INITIALIZING GEMINI 1.5 FLASH..."]);
-  }, [analyzing]);
+    setBootLines([
+      isBackendEngine
+        ? "> INITIALIZING OMNIMESH AI BACKEND (AMD + GEMMA VIA FIREWORKS)..."
+        : "> INITIALIZING GEMINI 1.5 FLASH...",
+    ]);
+  }, [analyzing, isBackendEngine]);
 
   useEffect(() => {
     if (!analyzing) return undefined;
@@ -780,8 +792,32 @@ export default function CommandPanel({
               <span />
               <span />
             </div>
-            <span className="gemini-title-text">GEMINI DISPATCH AGENT</span>
+            <span className="gemini-title-text">{engineLabel}</span>
+            {modeUsed ? (
+              <span
+                className={`om-routing-mode-badge om-routing-mode-badge--${modeUsed}`}
+                title="Inference routing mode fired by the orchestrator"
+              >
+                {modeUsed.toUpperCase()}
+              </span>
+            ) : null}
             <div className="gemini-titlebar-spacer" />
+            <div className="dispatch-engine-toggle" role="group" aria-label="Dispatch engine">
+              <button
+                type="button"
+                className={`dispatch-engine-btn ${!isBackendEngine ? "active" : ""}`}
+                onClick={() => onDispatchEngineChange?.("gemini")}
+              >
+                Gemini
+              </button>
+              <button
+                type="button"
+                className={`dispatch-engine-btn ${isBackendEngine ? "active" : ""}`}
+                onClick={() => onDispatchEngineChange?.("backend")}
+              >
+                OmniMesh AI
+              </button>
+            </div>
             <button type="button" className="gemini-analyze-btn" onClick={onAnalyze} disabled={analyzing}>
               $ analyze --zone
             </button>
@@ -811,6 +847,20 @@ export default function CommandPanel({
             {showPostAnalysis && analysis?.critical_alert ? (
               <div className="gemini-critical">
                 ⚑ {analysis.critical_alert}
+              </div>
+            ) : null}
+
+            {showPostAnalysis && modeUsed ? (
+              <div className={`om-routing-mode-hero om-routing-mode-hero--${modeUsed}`}>
+                <span className="om-routing-mode-hero__eyebrow">Live routing mode</span>
+                <span className="om-routing-mode-hero__value">{modeUsed.toUpperCase()}</span>
+                <span className="om-routing-mode-hero__hint">
+                  {modeUsed === "hybrid"
+                    ? "Local edge triage answered first — Gemma on Fireworks reconciled the dispatch."
+                    : modeUsed === "cloud"
+                      ? "Cloud-only path — Gemma via Fireworks AI on AMD infrastructure."
+                      : "Offline-safe local path — edge heuristic with zero cloud tokens."}
+                </span>
               </div>
             ) : null}
 

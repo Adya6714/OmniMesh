@@ -1,0 +1,25 @@
+services:
+  vllm-rocm:
+    image: rocm/vllm:latest
+    devices:
+      - /dev/kfd
+      - /dev/dri
+    group_add:
+      - video
+    ipc: host
+    ports: ["8001:8000"]
+    environment:
+      - HUGGING_FACE_HUB_TOKEN=${HF_TOKEN}
+    command: >
+      --model google/gemma-2-2b-it
+      --dtype float16
+      --max-model-len 4096
+      --port 8000
+    restart: unless-stopped
+
+  backend:
+    environment:
+      - LOCAL_MODEL_URL=http://vllm-rocm:8000/v1
+      - LOCAL_MODEL_ID=google/gemma-2-2b-it
+    depends_on:
+      - vllm-rocm

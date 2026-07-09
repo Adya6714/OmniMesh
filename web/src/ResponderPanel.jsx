@@ -15,6 +15,7 @@ export default function ResponderPanel({
   demoMode = true,
   analysis,
   analyzing,
+  dispatchEngine = "gemini",
   onAnalyze,
 }) {
   const [selectedId, setSelectedId] = useState(null);
@@ -178,8 +179,18 @@ export default function ResponderPanel({
             </button>
           </div>
           <p className="responder-analysis-sub">
-            {demoMode ? "Demo · stable Gemini-style response" : "Live · Gemini dispatch agent"}
+            {demoMode
+              ? "Demo · stable dispatch response"
+              : dispatchEngine === "backend"
+                ? "Live · OmniMesh AI backend (AMD + Gemma)"
+                : "Live · Gemini dispatch agent"}
           </p>
+
+          {analysis?.mode_used ? (
+            <div className={`om-routing-mode-badge om-routing-mode-badge--${analysis.mode_used} om-routing-mode-badge--panel`}>
+              Routing: {analysis.mode_used.toUpperCase()}
+            </div>
+          ) : null}
 
           {analysis?.critical_alert ? (
             <div className="responder-analysis-critical">

@@ -1,0 +1,27 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "8000:8000"
+    environment:
+      FIREWORKS_API_KEY: ${FIREWORKS_API_KEY:-}
+      FIREWORKS_BASE_URL: ${FIREWORKS_BASE_URL:-https://api.fireworks.ai/inference/v1}
+      LOCAL_INFERENCE_URL: http://local-inference:8001
+      AMD_DEV_CLOUD_INSTANCE: ${AMD_DEV_CLOUD_INSTANCE:-}
+      CONNECTIVITY_OVERRIDE: ${CONNECTIVITY_OVERRIDE:-}
+    depends_on:
+      local-inference:
+        condition: service_healthy
+
+  local-inference:
+    build:
+      context: ./local-inference
+    ports:
+      - "8001:8001"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8001/health')"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 5s

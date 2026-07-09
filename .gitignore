@@ -45,6 +45,8 @@ Edge Device Packet Dispatch May 10 2026.png
 Thumbs.db
 web/.env
 functions/.env
+backend/.env
+backend copy/.env
 
 # Agent / IDE noise (not needed to build the product)
 .agents/
