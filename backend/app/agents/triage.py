@@ -84,7 +84,7 @@ async def run(packet: TriagePacket, mode: ExecutionMode, trace=None):
     try:
         text, model, latency = await clients.cloud_chat("triage", SYSTEM_PROMPT, user)
         d = _parse_llm(text)
-        trace.append(f"CLOUD: Gemma via Fireworks (AMD) returned {d.get('severity')}")
+        trace.append(f"CLOUD: {model} via Fireworks (AMD) returned {d.get('severity')}")
         return AgentResponse(
             agent=AgentType.TRIAGE, packet_id=packet.packet_id,
             mode_used=mode, model_used=model,

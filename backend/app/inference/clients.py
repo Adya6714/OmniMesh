@@ -19,6 +19,13 @@ import os
 import time
 
 import httpx
+from dotenv import load_dotenv
+
+# Load backend/.env into the process environment. Needed when running
+# `uvicorn app.main:app` directly (Docker loads .env a different way, via
+# docker-compose's env_file:, so this is a no-op there but harmless).
+load_dotenv()
+
 
 # ---- Cloud (Fireworks AI, AMD-hosted) ----------------------------------
 FIREWORKS_BASE_URL = os.getenv("FIREWORKS_BASE_URL", "https://api.fireworks.ai/inference/v1")
