@@ -49,11 +49,19 @@ def local_gpu_available() -> bool:
     return bool(LOCAL_MODEL_URL)
 
 
-async def _openai_chat(base_url, api_key, model, system, user, timeout, max_tokens=512):
-    """Shared OpenAI-compatible chat call (works for Fireworks AND vLLM-ROCm)."""
+async def _openai_chat(base_url, api_key, model, system, user, timeout, max_tokens=512, no_system=False):
+    """Shared OpenAI-compatible chat call (works for Fireworks AND vLLM-ROCm).
+
+    no_system=True skips the system role entirely (Gemma's chat template on
+    vLLM does not support it) -- caller is expected to have already merged
+    any system instructions into `user` in that case.
+    """
     t0 = time.perf_counter()
     headers = {"Authorization": f"Bearer {api_key or 'none'}"}
-    messages = [{"role": "system", "content": system}, {"role": "user", "content": user}]
+    if no_system:
+        messages = [{"role": "user", "content": user}]
+    else:
+        messages = [{"role": "system", "content": system}, {"role": "user", "content": user}]
     async with httpx.AsyncClient(timeout=timeout) as client:
         r = await client.post(
             f"{base_url}/chat/completions",
@@ -76,11 +84,18 @@ async def cloud_chat(task, system, user, timeout=30.0):
 
 
 async def local_chat(system, user, timeout=20.0):
-    """Gemma on AMD GPU via vLLM-ROCm. Returns (text, model_id, latency_ms)."""
+    """Gemma on AMD GPU via vLLM-ROCm. Returns (text, model_id, latency_ms).
+
+    Gemma's chat template does not support a separate "system" role, only
+    user/assistant -- so we fold the system instructions into the user
+    message for this path only. The cloud path is unaffected.
+    """
     if not LOCAL_MODEL_URL:
         raise InferenceError("LOCAL_MODEL_URL not set (no ROCm GPU endpoint)")
+    merged_user = f"{system}\n\n{user}"
     return await _openai_chat(LOCAL_MODEL_URL, os.getenv("LOCAL_MODEL_KEY", ""),
-                              LOCAL_MODEL_ID, system, user, timeout)
+                              LOCAL_MODEL_ID, "", merged_user, timeout,
+                              no_system=True)
 
 
 async def cloud_embed(texts, timeout=30.0):
