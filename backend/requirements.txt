@@ -4,3 +4,4 @@ httpx==0.28.*
 pydantic==2.*
 pytest==8.*
 pytest-asyncio==0.25.*
+python-dotenv>=1.0
