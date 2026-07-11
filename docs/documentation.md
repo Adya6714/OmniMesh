@@ -240,4 +240,4 @@ Place a phone face-down on a table and knock something heavy onto it — simulat
 No button pressed. No app opened. No human action. A person who just became unconscious is now visible to the rescue system.
 The web demo is live at omnimesh-command.web.app. Toggle to Demo mode for simulation controls (Earthquake Scenario, Simulate Auto-SOS, Inject 5 RED, Clear). Toggle to Real mode to see live Firestore data. The Structural Collapse Protocol banner activates when three or more auto-SOS packets are present — trigger Earthquake Scenario followed by Simulate Auto-SOS once to reach this threshold.
 
-Built for Google Solution Challenge 2026 — SDGs 3, 11, 13 Android · React · Firebase · Gemini · TFLite · Nearby Connections · Vertex AI
+Built for offline-first disaster response — SDGs 3, 11, 13 · Android · React · Firebase · Gemini · TFLite · Nearby Connections · Vertex AI · AMD ROCm / Gemma

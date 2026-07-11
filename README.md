@@ -9,12 +9,13 @@
 
 <p align="center">
   <a href="https://omnimesh-command.web.app"><strong>Live demo — omnimesh-command.web.app</strong></a><br/>
+  <a href="https://github.com/Adya6714/OmniMesh/releases/download/release-v1.0/app-debug.apk"><strong>Download Android APK (release-v1.0)</strong></a><br/>
   <sub>Alternate host: <a href="https://omnimesh-command.firebaseapp.com">omnimesh-command.firebaseapp.com</a> · Firebase project <code>omnimesh-command</code> (<code>.firebaserc</code>)</sub><br/>
   <sub><strong>Source parity:</strong> Hosting serves <code>web/build</code> from the same React code as <code>npm start</code> / <code>npm run build --prefix web</code>. After UI changes, redeploy (<code>npm run deploy:hosting</code> or GitHub Actions on <code>main</code>). Hard-refresh if you still see an old shell (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>R</kbd>). The native <strong>Android</strong> app is Jetpack Compose (<code>app/</code>) — same product flows, different codebase than <code>web/</code>.</sub>
 </p>
 
 <p align="center">
-  <a href="https://developers.google.com/solution-challenges"><img src="https://img.shields.io/badge/Google-Solution_Challenge_2026-E37400?style=for-the-badge&logo=google&logoColor=white" alt="Google Solution Challenge 2026" /></a>
+  <a href="https://github.com/Adya6714/OmniMesh/releases/download/release-v1.0/app-debug.apk"><img src="https://img.shields.io/badge/Android_APK-release--v1.0-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Download Android APK" /></a>
   <img src="https://img.shields.io/badge/Android-API_26+-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Android API 26+" />
   <img src="https://img.shields.io/badge/Lifecycle-production_demo-314797?style=for-the-badge" alt="Demo maturity" />
 </p>
@@ -95,6 +96,8 @@ _Architecture diagram: see [System architecture diagram](#system-architecture-di
 ---
 
 ### Annex B — Rapid reproduction _(judges · hackathon markers)_
+
+**Android APK (no build required):** [app-debug.apk](https://github.com/Adya6714/OmniMesh/releases/download/release-v1.0/app-debug.apk) — GitHub release `release-v1.0`.
 
 ```bash
 make setup

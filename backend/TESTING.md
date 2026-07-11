@@ -167,7 +167,7 @@ matching against a small victim list, with Gemma explaining *why* it matched.
 
 Rehearse this exact sequence for the video — it's your winning narrative:
 
-1. "OmniMesh already does offline triage on-device — Google Solution Challenge."
+1. "OmniMesh already does offline triage on-device — edge-first disaster mesh."
 2. Open dashboard, switch to **OmniMesh AI backend**. "This is our new
    AMD-hosted reasoning layer."
 3. Flip connectivity **OFF**. Inject a critical packet. "No internet — the
