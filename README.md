@@ -109,6 +109,7 @@ make dev-web    # → http://localhost:3000
 
 | Doc | Purpose |
 | --- | --- |
+| [`docs/FEATURES.md`](docs/FEATURES.md) | Complete implemented feature inventory (Android · web · backend · Functions) |
 | [`docs/HACKATHON_SETUP.md`](docs/HACKATHON_SETUP.md) | Local setup, Firebase, Android, mesh testing, GitHub deploy secrets |
 | [`docs/documentation.md`](docs/documentation.md) | Full problem statement, layer-by-layer technical design, demo narrative |
 | [`docs/architecture.md`](docs/architecture.md) | Mermaid source for the Edge → Mesh → Command diagram |
@@ -138,8 +139,9 @@ make dev-web    # → http://localhost:3000
 15. [Repository layout & setup](#repository-layout--setup)
 16. [Setup guide](docs/HACKATHON_SETUP.md)  
 17. [Full technical documentation](docs/documentation.md)  
-18. [Architecture diagram source](docs/architecture.md)  
-19. [Documentation vs. this repository](#documentation-vs-this-repository)
+18. [Feature inventory](docs/FEATURES.md)  
+19. [Architecture diagram source](docs/architecture.md)  
+20. [Documentation vs. this repository](#documentation-vs-this-repository)
 
 </details>
 
@@ -203,7 +205,7 @@ See [Theory documentation](#theory-documentation) for the full narrative (signal
 
 ## Feature inventory
 
-_Complete product surface — suitable for resumes, Devpost, pitch decks, and hackathon submissions. See [`docs/documentation.md`](docs/documentation.md) for the full technical write-up and demo narrative._
+_Complete product surface — suitable for resumes, Devpost, pitch decks, and hackathon submissions. Full numbered inventory: [`docs/FEATURES.md`](docs/FEATURES.md). See [`docs/documentation.md`](docs/documentation.md) for the technical write-up and demo narrative._
 
 ### Core system
 
@@ -702,6 +704,7 @@ OmniMesh/
 ├── backend/             # OmniMesh AI FastAPI backend (AMD Hackathon — Gemma/Fireworks)
 ├── functions/           # Firebase Cloud Functions (Gemini dispatch)
 ├── docs/
+│   ├── FEATURES.md          # complete implemented feature inventory
 │   ├── documentation.md     # problem statement + full technical design
 │   ├── HACKATHON_SETUP.md   # setup, deploy, judges checklist
 │   ├── architecture.md      # Mermaid diagram source
