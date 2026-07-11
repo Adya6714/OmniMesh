@@ -134,7 +134,7 @@ Complete inventory of **implemented** product capabilities across Android (`app/
 77. **Missing-person matching** — Semantic rank of candidates with LLM explanation; offline token-cosine fallback.
 78. **A\* route planner** — Occupancy-grid pathfinding; zero LLM tokens.
 79. **Resource allocation** — Severity-first greedy assignment of units to victims.
-80. **Live GPU proof** — `GET /v1/gpu-status` confirms Gemma is loaded on the AMD GPU.
+80. **Live GPU proof** — `GET /v1/gpu-status` confirms Gemma is loaded on the AMD GPU. Static evidence: [`backend/rocm-smi-proof.png`](../backend/rocm-smi-proof.png) (`rocm-smi` + `docker ps`).
 81. **Infra + health** — Which cloud/local inference paths are configured and live.
 82. **Connectivity API** — Force uplink down for LOCAL-only demos (`POST /v1/connectivity/on|off`).
 

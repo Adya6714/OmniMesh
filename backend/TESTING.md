@@ -112,9 +112,11 @@ instance:
    ```
    This checks `rocm-smi`, verifies Docker, launches **both** the backend AND a
    real Gemma model served on the AMD GPU via vLLM-ROCm, then saves
-   `rocm-smi-proof.txt`.
+   `rocm-smi-proof.txt`. Checked-in visual proof:
+   [`rocm-smi-proof.png`](rocm-smi-proof.png) (`rocm-smi` + `docker ps`).
 4. **Take screenshots** of: `rocm-smi` output (shows the AMD GPU), the running
-   containers, and `/v1/infra` now showing `local_gpu.enabled: true`.
+   containers, and `/v1/infra` now showing `local_gpu.enabled: true` — or reuse
+   [`rocm-smi-proof.png`](rocm-smi-proof.png).
 
 > Note: `google/gemma-2-2b-it` is a gated model on Hugging Face. Accept its
 > license on the HF model page and `export HF_TOKEN=hf_...` in your shell
@@ -176,7 +178,7 @@ Rehearse this exact sequence for the video — it's your winning narrative:
 4. Flip connectivity **ON**. Inject a RED packet. "Uplink's back — it gives an
    instant local answer, then **Gemma on Fireworks reconciles** it." Point to
    the **HYBRID** badge.
-5. Show `/v1/infra` and the `rocm-smi` screenshot. "Gemma on AMD hardware two
+5. Show `/v1/infra` and [`rocm-smi-proof.png`](rocm-smi-proof.png). "Gemma on AMD hardware two
    ways — local ROCm and Fireworks cloud."
 6. Show vision (damage photo → severity) and missing-person (family reunion).
 7. Close on product/market: "Open-weight, vendor-neutral disaster AI —

@@ -232,7 +232,8 @@ export HF_TOKEN=hf_...     # accept gemma-2-2b-it license on HF first
 ./scripts/amd_setup.sh
 ```
 This checks `rocm-smi`, launches the backend + **Gemma on the AMD GPU via
-vLLM-ROCm**, and saves `rocm-smi-proof.txt`.
+vLLM-ROCm**, and saves `rocm-smi-proof.txt`. Checked-in visual proof:
+[`backend/rocm-smi-proof.png`](backend/rocm-smi-proof.png).
 
 Then verify the LOCAL path is now a REAL model on AMD hardware:
 ```bash
@@ -243,7 +244,8 @@ curl -s -X POST localhost:8000/v1/triage -H 'Content-Type: application/json' \
 Look at `model_used` — it should say `... (ROCm)`, NOT `edge-start-heuristic`.
 
 **Screenshot for submission:** `rocm-smi` output, the running containers, and
-`/v1/infra` showing `local_gpu.enabled: true`.
+`/v1/infra` showing `local_gpu.enabled: true` — see
+[`backend/rocm-smi-proof.png`](backend/rocm-smi-proof.png).
 
 **PASS =** Gemma answering from the AMD GPU with connectivity off. This is the
 single most important thing for the AMD + Gemma prizes: **Gemma on AMD hardware

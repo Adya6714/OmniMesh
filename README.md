@@ -682,7 +682,9 @@ Real ROCm-specific behavior observed in production logs on our AMD Instinct GPU 
 - `Using aiter sampler on ROCm` — AMD's dedicated sampling library
 - `Maximum concurrency for 4,096 tokens per request: 115.66x` — real headroom for concurrent triage requests
 
-`rocm-smi` proof: see [`backend/rocm-smi-proof.png`](backend/rocm-smi-proof.png).
+`rocm-smi` + running containers (`backend`, `vllm-rocm`, host `rocm` Jupyter) proof:
+
+![rocm-smi proof — AMD Instinct GPU at 91% VRAM with vLLM-ROCm and OmniMesh backend](backend/rocm-smi-proof.png)
 
 ### Wire the web dashboard
 
