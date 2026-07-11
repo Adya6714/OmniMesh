@@ -668,7 +668,7 @@ The API listens on **http://localhost:8000** with:
 | `POST /v1/connectivity/on\|off` | **live demo toggle** for the uplink |
 | `POST /v1/route`, `/v1/allocate` | A* pathfinding, resource allocation |
 
-18 unit tests passing (`cd backend && python -m pytest tests -v`). Full testing walkthrough in [`backend/MASTER_TEST_PLAN.md`](backend/MASTER_TEST_PLAN.md).
+17 unit tests passing (`cd backend && python -m pytest tests -v`). Full testing walkthrough in [`backend/MASTER_TEST_PLAN.md`](backend/MASTER_TEST_PLAN.md).
 
 ### AMD hardware evidence
 

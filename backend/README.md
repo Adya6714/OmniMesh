@@ -13,7 +13,7 @@ existing OmniMesh offline-first mesh-triage system.
 - **Creativity / originality** — a live **hybrid routing orchestrator** that
   decides per-packet whether to answer on the edge GPU, in the cloud, or both
   (local-first, cloud-reconciled), and streams a human-readable reasoning trace.
-- **Completeness** — six agents, 12 endpoints, containerized, 15 passing tests,
+- **Completeness** — six agents, 12 endpoints, containerized, 17 passing tests,
   graceful degradation so it never goes dark.
 - **Product / market** — open-weight and vendor-neutral: NGOs and governments
   can deploy disaster AI without proprietary-cloud lock-in or export constraints.

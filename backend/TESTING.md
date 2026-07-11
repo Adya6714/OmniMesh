@@ -32,7 +32,7 @@ pip install -r requirements.txt
 python -m pytest tests -v
 ```
 
-**Expected:** `15 passed`. If anything fails, stop and fix before continuing.
+**Expected:** `17 passed`. If anything fails, stop and fix before continuing.
 
 What each test group proves:
 - `test_health`, `test_infra_endpoint` — server + AMD-infra reporting works.
