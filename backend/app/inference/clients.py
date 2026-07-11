@@ -31,7 +31,7 @@ LOCAL_MODEL_ID = os.getenv("LOCAL_MODEL_ID", "google/gemma-2-2b-it")
 MODELS = {
     "triage": os.getenv("TRIAGE_MODEL", "accounts/fireworks/models/gemma-3-27b-it"),
     "translation": os.getenv("TRANSLATION_MODEL", "accounts/fireworks/models/gemma-3-27b-it"),
-    "vision": os.getenv("VISION_MODEL", "accounts/fireworks/models/qwen2p5-vl-32b-instruct"),
+    "vision": os.getenv("VISION_MODEL", "accounts/fireworks/models/kimi-k2p6"),
     "reconcile": os.getenv("RECONCILE_MODEL", "accounts/fireworks/models/gemma-3-27b-it"),
     "embed": os.getenv("EMBED_MODEL", "nomic-ai/nomic-embed-text-v1.5"),
 }
