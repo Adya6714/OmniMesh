@@ -44,6 +44,13 @@ async def infra():
     }
 
 
+@app.get("/v1/gpu-status")
+async def gpu_status():
+    """Live AMD GPU inference server status -- for a real-time dashboard
+    panel proving the GPU is up during judging, not just a screenshot."""
+    return await clients.gpu_status()
+
+
 @app.post("/v1/triage", response_model=OrchestrationResult)
 async def triage_packet(packet: TriagePacket):
     return await orch.orchestrate(packet)

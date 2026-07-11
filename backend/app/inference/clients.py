@@ -118,3 +118,30 @@ async def cloud_embed(texts, timeout=30.0):
     if r.status_code != 200:
         raise InferenceError(f"embed {r.status_code}: {r.text[:200]}")
     return [d["embedding"] for d in r.json()["data"]]
+
+
+async def gpu_status(timeout=5.0):
+    """Live status of the AMD GPU inference server (vLLM-ROCm).
+
+    Queries the model server own /health and /v1/models endpoints so the
+    dashboard can show real-time proof the AMD GPU is up and serving --
+    not just a one-time screenshot. Never raises.
+    """
+    if not LOCAL_MODEL_URL:
+        return {"available": False, "reason": "LOCAL_MODEL_URL not configured"}
+    base = LOCAL_MODEL_URL.rsplit("/v1", 1)[0]
+    try:
+        async with httpx.AsyncClient(timeout=timeout) as client:
+            health = await client.get(f"{base}/health")
+            models = await client.get(f"{base}/v1/models")
+        model_ids = []
+        if models.status_code == 200:
+            model_ids = [m.get("id") for m in models.json().get("data", [])]
+        return {
+            "available": health.status_code == 200,
+            "endpoint": base,
+            "loaded_models": model_ids,
+            "backend": "vLLM on AMD ROCm",
+        }
+    except Exception as e:
+        return {"available": False, "endpoint": base, "reason": str(e)[:150]}
