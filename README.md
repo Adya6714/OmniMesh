@@ -69,7 +69,7 @@ _Architecture diagram: see [System architecture diagram](#system-architecture-di
 <td align="center" colspan="2">
 <b>Fig. 1 · Product overview</b><br/>
 <sub>Victim · Responder · Command surfaces · mesh + AI stack</sub><br/><br/>
-<img src="docs/sc/1.png" alt="OmniMesh product overview" width="96%" />
+<img src="docs/product-overview.png" alt="OmniMesh product overview" width="40%" />
 </td>
 </tr>
 <tr>
@@ -382,7 +382,7 @@ flowchart TB
 <p align="center">
   <strong>Fig. 5 · Edge → Mesh → Command packet dispatch flow</strong><br/>
   <sub>Full three-layer data plane: sensor fusion at the edge, priority-ordered P2P relay through the mesh, and Firestore-backed command synthesis with Gemini dispatch.</sub><br/><br/>
-  <img src="Edge%20Device%20Packet%20Dispatch%20May%2010%202026.png" alt="OmniMesh three-layer packet dispatch flow — Edge, Mesh, Command" width="55%" />
+  <img src="Edge%20Device%20Packet%20Dispatch%20May%2010%202026.png" alt="OmniMesh three-layer packet dispatch flow — Edge, Mesh, Command" width="28%" />
 </p>
 
 ---
@@ -684,7 +684,9 @@ Real ROCm-specific behavior observed in production logs on our AMD Instinct GPU 
 
 `rocm-smi` + running containers (`backend`, `vllm-rocm`, host `rocm` Jupyter) proof:
 
-![rocm-smi proof — AMD Instinct GPU at 91% VRAM with vLLM-ROCm and OmniMesh backend](backend/rocm-smi-proof.png)
+<p align="center">
+  <img src="backend/rocm-smi-proof.png" alt="rocm-smi proof — AMD Instinct GPU at 91% VRAM with vLLM-ROCm and OmniMesh backend" width="28%" />
+</p>
 
 ### Wire the web dashboard
 
