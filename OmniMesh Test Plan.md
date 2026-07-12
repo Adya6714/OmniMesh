@@ -180,7 +180,7 @@ in your existing test plan; the must-checks:
 6. `/dashboard` → New Deployment → join code appears; Declare/Close Incident works.
 
 **PASS =** existing Gemini flow AND new backend flow both work, switchable via the
-toggle. That coexistence is a strong story for judges (vendor-neutral fallback).
+toggle. That coexistence is a strong product story (vendor-neutral fallback).
 
 ---
 
@@ -202,12 +202,12 @@ regressed:
 system — you've done this before).
 
 > Note: Android is NOT yet wired to the new backend — that's a later, optional
-> step. For the hackathon, the web dashboard showing the backend is enough. If
+> step. For a product demo, the web dashboard showing the backend is enough. If
 > time allows, we add an Android toggle that calls the backend too.
 
 ---
 
-## STAGE G — Docker (containerization is a HARD hackathon requirement)
+## STAGE G — Docker (containerized deployment)
 
 On your laptop (if you install Docker Desktop) OR on the AMD instance:
 ```bash
@@ -222,7 +222,7 @@ now served from the container.
 
 ---
 
-## STAGE H — AMD Developer Cloud + ROCm (the AMD-platform proof + Gemma prize)
+## STAGE H — AMD Instinct GPU + ROCm (AMD-platform proof)
 
 Once your AMD credits are approved and you've launched a GPU instance:
 ```bash
@@ -248,7 +248,7 @@ Look at `model_used` — it should say `... (ROCm)`, NOT `edge-start-heuristic`.
 [`backend/rocm-smi-proof.png`](backend/rocm-smi-proof.png).
 
 **PASS =** Gemma answering from the AMD GPU with connectivity off. This is the
-single most important thing for the AMD + Gemma prizes: **Gemma on AMD hardware
+core capability to demonstrate: **Gemma on AMD hardware
 two ways — ROCm locally and Fireworks in the cloud.**
 
 ---

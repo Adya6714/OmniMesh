@@ -19,7 +19,7 @@ they route correctly:
 | **HYBRID** | local answer first, then CLOUD reconciles | Online + critical (RED) case |
 
 The **routing badge** (LOCAL / CLOUD / HYBRID) and the **reasoning_trace** are
-what you show the judges. Everything below is about confirming those are correct.
+the primary UX proof points. Everything below is about confirming those are correct.
 
 ---
 
@@ -83,7 +83,7 @@ sentence.
 
 ---
 
-## Stage 3 — Docker (containerization is a hard hackathon requirement)
+## Stage 3 — Docker (containerized deployment)
 
 Still on your laptop OR the AMD instance:
 
@@ -95,14 +95,13 @@ docker compose up --build
 Then in another terminal: `./scripts/smoke_test.sh`
 
 **Expected:** identical results to Stage 2, but now served from inside the
-container. If this works, you've satisfied the "must be containerized" rule.
+container.
 
 ---
 
-## Stage 4 — Deploy on AMD Developer Cloud (this is your AMD-platform proof)
+## Stage 4 — Deploy on an AMD Instinct GPU host (AMD-platform proof)
 
-Once your AMD Developer Cloud credits are approved and you've launched a GPU
-instance:
+Once you have a cloud GPU instance with an AMD Instinct accelerator and ROCm:
 
 1. SSH into the instance.
 2. Clone your repo, `cd OmniMesh/backend`.
@@ -125,9 +124,8 @@ instance:
 
 **Now the LOCAL path is a real Gemma model on an AMD GPU** — verify by turning
 connectivity OFF and confirming the triage `model_used` says `... (ROCm)`, not
-`edge-start-heuristic`. **This is the single most important thing to demonstrate
-for the AMD/Gemma prizes:** Gemma running on AMD hardware two ways (ROCm locally
-+ Fireworks in cloud).
+`edge-start-heuristic`. **Core demo:** Gemma running on AMD hardware two ways
+(ROCm locally + Fireworks in cloud).
 
 ---
 
@@ -160,14 +158,14 @@ curl -X POST http://localhost:8000/v1/vision \
 Expected: JSON with `damage_level`, `hazards`, `entry_safe`. Use a real damage
 photo URL. (Base64 data URLs also work if you want offline-captured photos.)
 
-**Missing-person:** already covered by the smoke test — show the judges a query
+**Missing-person:** already covered by the smoke test — walk through a query
 matching against a small victim list, with Gemma explaining *why* it matched.
 
 ---
 
-## Stage 7 — Demo rehearsal script (what you actually say/do on camera)
+## Stage 7 — Demo rehearsal script
 
-Rehearse this exact sequence for the video — it's your winning narrative:
+Rehearse this sequence for a product demo video:
 
 1. "OmniMesh already does offline triage on-device — edge-first disaster mesh."
 2. Open dashboard, switch to **OmniMesh AI backend**. "This is our new

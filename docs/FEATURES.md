@@ -1,6 +1,6 @@
 # OmniMesh — Feature Inventory
 
-Complete inventory of **implemented** product capabilities across Android (`app/`), web dashboard (`web/`), OmniMesh AI backend (`backend/`), and Firebase Cloud Functions (`functions/`). Suitable for judges, pitch decks, and Devpost.
+Complete inventory of **implemented** product capabilities across Android (`app/`), web dashboard (`web/`), OmniMesh AI backend (`backend/`), and Firebase Cloud Functions (`functions/`). Suitable for product overviews and technical briefs.
 
 **Android APK (no build required):** [app-debug.apk](https://github.com/Adya6714/OmniMesh/releases/download/release-v1.0/app-debug.apk) — release `release-v1.0`.
 

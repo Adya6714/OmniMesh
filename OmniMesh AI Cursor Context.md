@@ -20,27 +20,17 @@ single idea the whole product, demo, and pitch are built around — every
 architectural decision should reinforce it, not dilute it with unrelated
 features.
 
-## 2. Hackathon constraints (do not violate these)
+## 2. Product constraints (keep these)
 
-- **Event**: AMD Developer Hackathon: ACT II, Track 3 — Unicorn Track.
-- **Judging criteria**: creativity/originality, product/market potential,
-  completeness, meaningful use of AMD platforms. No benchmark, no leaderboard.
-- **Must be containerized** — every service ships with a Dockerfile, the
-  whole system runs via a single `docker-compose up`.
-- **Must use AMD infrastructure meaningfully**: AMD Developer Cloud (hosting),
-  ROCm (edge/local inference benchmarked on ROCm-backed instance), Fireworks
-  AI API (cloud model calls).
-- **Bonus target**: "Best AMD-Hosted Gemma Project" ($2,000, Track 3). At
-  least the **medical triage agent** and **translation agent** must run on a
-  Gemma model via Fireworks AI, and this must be explicitly documented and
-  demoed, not buried.
-- **Submission package required**: public GitHub repo + runnable README,
-  containerized demo app with a live URL, cover image, video presentation,
-  slide presentation, short + long description, tech tags. Build these into
-  the day-4 checklist, not an afterthought.
-- **Confirm the actual deadline** in the lablab.ai Event Schedule tab before
-  finalizing the day-by-day plan below — do not hardcode a date in code or
-  docs.
+- **Must be containerized** — every service ships with a Dockerfile; the
+  whole backend stack runs via `docker compose up`.
+- **Must use AMD infrastructure meaningfully**: AMD Instinct GPU + ROCm for
+  local Gemma (vLLM-ROCm), Fireworks AI for cloud Gemma / vision.
+- **Gemma paths** — at least the **medical triage** and **translation** agents
+  should run on Gemma (Fireworks and/or ROCm local) and be documented in the
+  README.
+- **Public repo** — runnable README, containerized demo, architecture docs.
+- Do not hardcode ephemeral deadlines into code or docs.
 
 ## 3. Tech stack
 
@@ -54,20 +44,20 @@ features.
   Models: Gemma (triage, translation), Llama-3.2-Vision or Qwen2-VL (damage
   vision), a general Llama/Mixtral instruct model as fallback reasoning model.
 - **Local/edge inference**: small quantized models served via `vllm` or
-  `llama.cpp` (HIP/ROCm backend) on an AMD Developer Cloud GPU instance,
-  explicitly labeled in docs as "edge-simulated on ROCm" — do not claim this
+  `llama.cpp` (HIP/ROCm backend) on an AMD Instinct GPU instance,
+  explicitly labeled in docs as "edge inference on ROCm" — do not claim this
   runs on a physical phone unless it actually does.
 - **Non-LLM agents** (route planning, resource allocation): plain algorithms —
   A*/Dijkstra for routing, a greedy/constraint heuristic (or `ortools`) for
   allocation. Do not force an LLM call where a deterministic algorithm is
-  more correct and more impressive to judges who know the difference.
+  more correct and clearer to operators.
 - **Existing assets to reuse, not rebuild**: `TriagePacket` schema, RED/YELLOW/
   GREEN priority model, the simulation/demo injection mode, the React web
   dashboard, the Android mesh/BLE layer and Gemini-dispatch call site (this
   call site gets replaced by a call to the new orchestrator service).
 - **Containerization**: Docker + docker-compose. One container per service
   (`agents-api`, `web-dashboard`, optionally `local-inference` if run as a
-  separate process). Deployed on AMD Developer Cloud.
+  separate process). Deployed on a cloud AMD GPU host when ROCm is needed.
 - **Config/secrets**: `.env` file, never committed. Required vars listed in
   section 6.
 
@@ -77,7 +67,7 @@ features.
 omnimesh-ai/
 ├── CURSOR_CONTEXT.md              # this file
 ├── docker-compose.yml
-├── README.md                      # judge-facing, must be complete & runnable
+├── README.md                      # product-facing, must be complete & runnable
 ├── backend/
 │   ├── Dockerfile
 │   ├── pyproject.toml
@@ -176,8 +166,8 @@ that's a much weaker story and loses the point of the whole project.
   (`run_local`, `run_cloud`, `escalation_threshold`, `requires_high_precision`).
 - FastAPI routers per concern, not one giant `main.py`.
 - No hardcoded API keys or model names inline — pull from `config.py`.
-- Prefer explicit over clever. This is a 4-day build being read by judges,
-  not a codebase optimized for future maintainers.
+- Prefer explicit over clever. Optimize for clarity and correctness for
+  future maintainers and operators.
 
 ## 9. Build order for Cursor sessions (follow in this order)
 
@@ -202,6 +192,6 @@ that's a much weaker story and loses the point of the whole project.
   saves time this week — ceremony you don't finish is worse than a plain
   asyncio orchestrator that works.
 - Don't fake ROCm/local inference claims — label simulated components
-  honestly in the README; judges respect this more than they punish it.
+  honestly in the README.
 - Don't let agent count grow at the expense of the connectivity-toggle demo
   — that single moment matters more than a 7th agent.

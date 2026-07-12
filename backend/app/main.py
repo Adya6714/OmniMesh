@@ -47,7 +47,7 @@ async def infra():
 @app.get("/v1/gpu-status")
 async def gpu_status():
     """Live AMD GPU inference server status -- for a real-time dashboard
-    panel proving the GPU is up during judging, not just a screenshot."""
+    panel proving the GPU is up at runtime, not just a screenshot."""
     return await clients.gpu_status()
 
 

@@ -34,7 +34,7 @@ def generate_synthetic_meta_data(n_samples=5000):
     """
     Generate synthetic meta-classifier training data.
     💡 In production you'd collect real inference outputs + human labels.
-    For the demo/hackathon, synthetic data calibrated to realistic
+    For demos, synthetic data calibrated to realistic
     signal agreement patterns works well enough.
     """
     np.random.seed(42)

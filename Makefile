@@ -1,4 +1,4 @@
-# OmniMesh — hackathon / local dev shortcuts
+# OmniMesh — local development shortcuts
 # Requires: GNU Make, Node.js (see .nvmrc), JDK 17+, Android SDK for Android targets
 
 .DEFAULT_GOAL := help
@@ -19,7 +19,7 @@ help:
 	@echo "  make functions-emulators  Run Functions emulator (needs firebase-tools + functions/.env)"
 	@echo "  make check-node         Verify Node major version vs .nvmrc"
 	@echo ""
-	@echo "First-time: copy env templates (see docs/HACKATHON_SETUP.md)"
+	@echo "First-time: copy env templates (see docs/SETUP.md)"
 	@echo "  cp web/.env.example web/.env"
 	@echo "  cp secrets.properties.example secrets.properties"
 

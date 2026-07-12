@@ -1,4 +1,4 @@
-# Hackathon / judging — reproduce OmniMesh locally
+# Local setup — reproduce OmniMesh
 
 Follow these steps on macOS, Linux, or Windows (WSL recommended for Make). Total time ~15 minutes once SDKs are installed.
 
@@ -205,7 +205,7 @@ If Firestore env vars are missing, the app still runs in demo-oriented modes but
 
 ---
 
-## 6. End-to-end checklist (judges)
+## 6. End-to-end checklist
 
 - [ ] `make setup` succeeds  
 - [ ] `web/.env` populated; `make dev-web` loads UI  
