@@ -69,7 +69,7 @@ _Architecture diagram: see [System architecture diagram](#system-architecture-di
 <td align="center" colspan="2">
 <b>Fig. 1 · Product overview</b><br/>
 <sub>Victim · Responder · Command surfaces · mesh + AI stack</sub><br/><br/>
-<img src="docs/product-overview.png" alt="OmniMesh product overview" width="40%" />
+<img src="docs/product-overview.png" alt="OmniMesh product overview" width="75%" />
 </td>
 </tr>
 <tr>
@@ -352,38 +352,7 @@ Responsibilities by plane:
 
 ## System architecture diagram
 
-The canonical **three‑layer data‑plane figure** lives in [`docs/architecture.md`](docs/architecture.md). An excerpt:
-
-```mermaid
-flowchart TB
-  subgraph EDGE["Edge layer"]
-    SENS["Sensors"]
-    ML["ML inference"]
-    TP["TriagePacket"]
-    SENS --> ML --> TP
-  end
-  subgraph MESH["Mesh layer"]
-    NC["P2P / Nearby"]
-    PQ["Priority queue DAO"]
-    SF["Store-and-forward"]
-    NC --> PQ --> SF --> NC
-  end
-  subgraph COMMAND["Command layer"]
-    FS["Firestore"]
-    WEB["Web dashboard"]
-    GEM["Gemini dispatch"]
-    FS <--> WEB --> GEM --> WEB
-  end
-  TP --> NC
-  SF <--> FS
-  WEB --> FS
-```
-
-<p align="center">
-  <strong>Fig. 5 · Edge → Mesh → Command packet dispatch flow</strong><br/>
-  <sub>Full three-layer data plane: sensor fusion at the edge, priority-ordered P2P relay through the mesh, and Firestore-backed command synthesis with Gemini dispatch.</sub><br/><br/>
-  <img src="Edge%20Device%20Packet%20Dispatch%20May%2010%202026.png" alt="OmniMesh three-layer packet dispatch flow — Edge, Mesh, Command" width="28%" />
-</p>
+The canonical **three‑layer data‑plane figure** (Mermaid source + PNG) lives in [`docs/architecture.md`](docs/architecture.md).
 
 ---
 
@@ -685,7 +654,7 @@ Real ROCm-specific behavior observed in production logs on our AMD Instinct GPU 
 `rocm-smi` + running containers (`backend`, `vllm-rocm`, host `rocm` Jupyter) proof:
 
 <p align="center">
-  <img src="backend/rocm-smi-proof.png" alt="rocm-smi proof — AMD Instinct GPU at 91% VRAM with vLLM-ROCm and OmniMesh backend" width="28%" />
+  <img src="backend/rocm-smi-proof.png" alt="rocm-smi proof — AMD Instinct GPU at 91% VRAM with vLLM-ROCm and OmniMesh backend" width="85%" />
 </p>
 
 ### Wire the web dashboard
