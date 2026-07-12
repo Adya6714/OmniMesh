@@ -69,7 +69,7 @@ _Architecture diagram: see [System architecture diagram](#system-architecture-di
 <td align="center" colspan="2">
 <b>Fig. 1 · Product overview</b><br/>
 <sub>Victim · Responder · Command surfaces · mesh + AI stack</sub><br/><br/>
-<img src="docs/product-overview.png" alt="OmniMesh product overview" width="75%" />
+<img src="docs/product-overview.png" alt="OmniMesh product overview" width="100%" />
 </td>
 </tr>
 <tr>
@@ -654,7 +654,7 @@ Real ROCm-specific behavior observed in production logs on our AMD Instinct GPU 
 `rocm-smi` + running containers (`backend`, `vllm-rocm`, host `rocm` Jupyter) proof:
 
 <p align="center">
-  <img src="backend/rocm-smi-proof.png" alt="rocm-smi proof — AMD Instinct GPU at 91% VRAM with vLLM-ROCm and OmniMesh backend" width="85%" />
+  <img src="backend/rocm-smi-proof.png" alt="rocm-smi proof — AMD Instinct GPU at 91% VRAM with vLLM-ROCm and OmniMesh backend" width="100%" />
 </p>
 
 ### Wire the web dashboard
