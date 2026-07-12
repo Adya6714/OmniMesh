@@ -2,6 +2,7 @@
 __pycache__/
 *.pyc
 .venv/
+.venv2/
 .pytest_cache/
 rocm-smi-proof.txt
 docker-compose.override.yml
